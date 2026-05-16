@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: codeshoot
+      POSTGRES_PASSWORD: codeshoot
+      POSTGRES_DB: codeshoot
+    ports:
+      - "5432:5432"
+    volumes:
+      - codeshoot_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U codeshoot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Untrusted user-code sandbox. Starts EMPTY: install the node package once
+  # after first boot (see README "Piston setup").
+  piston:
+    image: ghcr.io/engineer-man/piston:latest
+    privileged: true
+    ports:
+      - "2000:2000"
+    volumes:
+      - codeshoot_piston:/piston
+
+volumes:
+  codeshoot_pg:
+  codeshoot_piston:

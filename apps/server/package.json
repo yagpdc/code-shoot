@@ -1,0 +1,37 @@
+{
+  "name": "@code-shoot/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"no tests\" && exit 0",
+    "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@code-shoot/problems": "workspace:*",
+    "@code-shoot/shared": "workspace:*",
+    "@colyseus/schema": "2.0.37",
+    "@colyseus/ws-transport": "0.15.3",
+    "better-auth": "^1.1.21",
+    "colyseus": "0.15.57",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.38.4",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.5",
+    "@types/pg": "^8.11.10",
+    "drizzle-kit": "^0.30.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
