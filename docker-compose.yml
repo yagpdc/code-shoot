@@ -7,8 +7,10 @@ services:
       POSTGRES_DB: codeshoot
     ports:
       - "5432:5432"
+    # Postgres 18+ expects the mount at /var/lib/postgresql (data lands in a
+    # version subdir); mounting .../data directly makes the container exit.
     volumes:
-      - codeshoot_pg:/var/lib/postgresql/data
+      - codeshoot_pg:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U codeshoot"]
       interval: 5s

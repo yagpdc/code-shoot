@@ -6,7 +6,11 @@ import {
   type Problem,
   toPublicProblem,
 } from "@code-shoot/shared";
-import { type Client, Room } from "colyseus";
+import type { Client } from "colyseus";
+// colyseus 0.15 is CJS; Node ESM can't see its named exports — default-import.
+import colyseus from "colyseus";
+
+const { Room } = colyseus;
 import { auth } from "../auth.js";
 import { db, schema } from "../db/index.js";
 import { judge } from "../judge/piston.js";

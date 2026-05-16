@@ -38,9 +38,13 @@ pnpm db:push                  # cria as tabelas (Drizzle)
 pnpm dev                      # server (2567) + web (5173) em paralelo
 ```
 
-### Piston setup (uma vez, após `docker compose up`)
+### Piston
 
-O container do Piston sobe sem nenhuma linguagem. Instale o Node:
+`PISTON_URL` é a **base da API, incluindo o segmento de versão**, e o juiz
+chama `${PISTON_URL}/execute`.
+
+**Prod / Linux (self-hosted via docker-compose):** o container sobe sem
+nenhuma linguagem — instale o Node uma vez:
 
 ```bash
 curl -X POST http://localhost:2000/api/v2/packages \
@@ -48,8 +52,19 @@ curl -X POST http://localhost:2000/api/v2/packages \
   -d '{"language":"node","version":"20.11.1"}'
 ```
 
-Confirme com `curl http://localhost:2000/api/v2/runtimes`. A versão tem que
-bater com `PISTON_NODE_VERSION` no `.env`.
+Aí `PISTON_URL=http://localhost:2000/api/v2` e `PISTON_NODE_VERSION=20.11.1`.
+Confirme com `curl http://localhost:2000/api/v2/runtimes`.
+
+**Dev no Windows:** o Docker Desktop não roda o Piston (precisa de cgroup v2
+com controllers delegados). Use a instância pública — sem mudança de código:
+
+```
+PISTON_URL=https://emkc.org/api/v2/piston
+PISTON_NODE_VERSION=18.15.0
+```
+
+(É um artefato só do Docker Desktop/Windows; no host Linux do deploy o
+Piston self-hosted roda nativo.)
 
 ## Estado (Fase 0)
 

@@ -1,10 +1,14 @@
 import { createServer } from "node:http";
 import { DUEL_ROOM } from "@code-shoot/shared";
-import { WebSocketTransport } from "@colyseus/ws-transport";
+import wsTransport from "@colyseus/ws-transport";
 import { toNodeHandler } from "better-auth/node";
-import { Server } from "colyseus";
+// colyseus 0.15 is CJS; Node ESM can't see its named exports — default-import.
+import colyseus from "colyseus";
 import cors from "cors";
 import express from "express";
+
+const { Server } = colyseus;
+const { WebSocketTransport } = wsTransport;
 import { problemsRouter } from "./api/problems.js";
 import { auth } from "./auth.js";
 import { env } from "./env.js";
