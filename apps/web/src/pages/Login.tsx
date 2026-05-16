@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { authClient, signIn, signUp, useSession } from "../auth.js";
 
 export function Login() {
@@ -12,9 +12,7 @@ export function Login() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  if (session) {
-    navigate("/lobby", { replace: true });
-  }
+  if (session?.user) return <Navigate to="/lobby" replace />;
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -63,7 +61,12 @@ export function Login() {
       <button
         type="button"
         className="ghost"
-        onClick={() => authClient.signIn.social({ provider: "github" })}
+        onClick={() =>
+          authClient.signIn.social({
+            provider: "github",
+            callbackURL: `${window.location.origin}/lobby`,
+          })
+        }
       >
         Entrar com GitHub
       </button>

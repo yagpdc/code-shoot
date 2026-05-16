@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { signOut, useSession } from "../auth.js";
 
 export function Lobby() {
@@ -6,10 +6,7 @@ export function Lobby() {
   const { data: session, isPending } = useSession();
 
   if (isPending) return <div className="card">Carregando…</div>;
-  if (!session) {
-    navigate("/login", { replace: true });
-    return null;
-  }
+  if (!session?.user) return <Navigate to="/login" replace />;
 
   return (
     <div className="card lobby">

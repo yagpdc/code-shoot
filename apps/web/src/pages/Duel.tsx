@@ -64,11 +64,11 @@ export function Duel() {
   } | null>(null);
   const [elapsed, setElapsed] = useState(0);
 
-  const myId = session?.user.id;
+  const myId = session?.user?.id;
 
   useEffect(() => {
     if (isPending) return;
-    if (!session) {
+    if (!session?.user) {
       navigate("/login", { replace: true });
       return;
     }
